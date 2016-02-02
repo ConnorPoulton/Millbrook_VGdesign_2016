@@ -6,11 +6,11 @@ public class Goal : MonoBehaviour {
 
     public string NextLevel;
     public RectTransform LevelClearScreen;
-    Vector3 rotation = new Vector3(0,0,2);
+    Vector3 rotation = new Vector3(0,0,50);
 	
 	void Update ()
     {
-        this.transform.Rotate(rotation, Space.Self); 
+        this.transform.Rotate((rotation * Time.deltaTime), Space.Self); 
 	}
 
     void OnTriggerEnter(Collider col)
