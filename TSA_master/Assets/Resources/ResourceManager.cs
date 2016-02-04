@@ -33,13 +33,13 @@ namespace TSA
 
         public static Vector3 MakeCameraVecInBounds(Vector3 target, float camzoom)
         {
-    
+            
             Vector3 CamURBound = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, camzoom));
             Vector3 CamLLBounds = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, camzoom));
 
             float CamXOffSet = (Mathf.Abs(CamURBound.x - CamLLBounds.x) / 2);
             float CamZOffSet = (Mathf.Abs(CamURBound.z - CamLLBounds.z) / 2);
-            
+
             float ZMin = ResourceManager.SceneLLBounds.z + CamZOffSet;
             float ZMax = ResourceManager.SceneURBounds.z - CamZOffSet;
             float XMax = ResourceManager.SceneURBounds.x - CamXOffSet;
