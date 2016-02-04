@@ -125,19 +125,20 @@ public class PlayerMovment : MonoBehaviour {
         }
         
         Vector3 movement = new Vector3(moveHorizontal, MoveDown, moveVertical);
-        cc.Move((movement * SpeedFromBase));
+        cc.Move((movement * (SpeedFromBase * Time.deltaTime)));
     }
 
 
     void AdjustCamera(Vector3 camPos, Vector3 trans)
     {
+        float camlag = (5 * Time.deltaTime);
         float zoomSpeed = 1;        
         if (CamBoundToPlayer == true)          
             zoomSpeed = p_CameraZoomSpeed;
         
 
         Vector3 velocity = ((CamTarget - camPos));     
-        Vector3 newcampos = camPos += new Vector3(velocity.x, ((velocity.y) * (zoomSpeed)), velocity.z);
+        Vector3 newcampos = camPos += new Vector3((velocity.x * camlag), ((velocity.y) * (zoomSpeed)), (velocity.z * Time.deltaTime));
         if (CamBoundToPlayer == true)
         {
             float CamYOut = Mathf.Abs(camPos.y - trans.y);
