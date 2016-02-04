@@ -34,6 +34,7 @@ public class PlayerMovment : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        Application.targetFrameRate = 300;
         Vector3 trans = this.transform.position;
         SoundBounds = this.transform.GetChild(0);
 
@@ -125,19 +126,20 @@ public class PlayerMovment : MonoBehaviour {
         }
         
         Vector3 movement = new Vector3(moveHorizontal, MoveDown, moveVertical);
-        cc.Move((movement * SpeedFromBase));
+        cc.Move((movement * (CurrentSpeed * Time.deltaTime)));
     }
 
 
     void AdjustCamera(Vector3 camPos, Vector3 trans)
     {
+        float camLag = (10 * Time.deltaTime); //adds a slight delay to camera tracking to prevent cam shake
         float zoomSpeed = 1;        
         if (CamBoundToPlayer == true)          
             zoomSpeed = p_CameraZoomSpeed;
         
 
         Vector3 velocity = ((CamTarget - camPos));     
-        Vector3 newcampos = camPos += new Vector3(velocity.x, ((velocity.y) * (zoomSpeed)), velocity.z);
+        Vector3 newcampos = camPos += new Vector3((velocity.x * camLag), ((velocity.y) * (zoomSpeed)), (velocity.z * camLag));
         if (CamBoundToPlayer == true)
         {
             float CamYOut = Mathf.Abs(camPos.y - trans.y);
